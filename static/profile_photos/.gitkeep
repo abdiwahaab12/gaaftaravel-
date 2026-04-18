@@ -1,0 +1,2 @@
+# This file ensures the profile_photos directory is tracked by Git
+# Actual profile photos will be ignored by .gitignore

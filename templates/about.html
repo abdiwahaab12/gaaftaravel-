@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>About Us - Wanaag Travel & Logistics</title>
+  <meta name="description" content="Learn about Wanaag Travel & Logistics - your trusted partner for seamless travel experiences worldwide.">
+  <meta name="keywords" content="about, travel agency, logistics, team, mission, vision">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+  <style>
+    /* Custom styles for About page */
+    
+    /* Center navigation menu */
+    .navmenu ul {
+      justify-content: center !important;
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .navmenu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Light Footer Styles */
+    .footer {
+      background: #f8f9fa !important;
+      color: #333333 !important;
+    }
+    
+    .footer-main {
+      background: #f8f9fa !important;
+      padding: 40px 0 30px !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .footer-bottom {
+      background: #FFA200 !important;
+      border-top: 1px solid #e9ecef !important;
+      padding: 15px 0 !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Newsletter Subscription */
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .newsletter-form input::placeholder {
+      color: #666;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #045b36;
+    }
+    
+    /* Social Media Icons */
+    .footer-social .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .footer-social .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      transform: translateY(-2px);
+    }
+    
+    /* Specific social media icon colors */
+    .footer-social .social-links a.facebook:hover {
+      background: #1877f2;
+    }
+    
+    .footer-social .social-links a.whatsapp:hover {
+      background: #25d366;
+    }
+    
+    .footer-social .social-links a.linkedin:hover {
+      background: #0077b5;
+    }
+    
+    .footer h3, .footer h4, .footer h5 {
+      color: #047847 !important;
+    }
+    
+    .footer p {
+      color: #666666 !important;
+    }
+    
+    .footer-links ul li a {
+      color: #666666 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item {
+      color: #666666 !important;
+    }
+    
+    .footer-contact .contact-item strong {
+      color: #333333 !important;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847 !important;
+    }
+    
+    .footer-social .social-links a {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      color: white !important;
+    }
+    
+    .copyright {
+      color: #333333 !important;
+    }
+    
+    .footer-legal-links a {
+      color: #333333 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-legal-links a:hover {
+      color: #047847 !important;
+    }
+    
+    
+    .admin-access {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #FFA200;
+      color: #2d014d;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+    }
+    
+    .admin-access:hover {
+      background: #fff;
+      color: #2d014d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 162, 0, 0.4);
+    }
+    
+    .sitename {
+      color: #047847 !important;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #047847 0%, #FFA200 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .hero-section p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .about-content {
+      padding: 80px 0;
+    }
+    
+    .mission-vision {
+      background: #f8f9fa;
+      padding: 80px 0;
+    }
+    
+    .mission-card, .vision-card {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      height: 100%;
+    }
+    
+    .mission-card h3, .vision-card h3 {
+      color: #047847;
+      margin-bottom: 20px;
+    }
+    
+    .mission-card .icon, .vision-card .icon {
+      width: 80px;
+      height: 80px;
+      background: #FFA200;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+      color: #2d014d;
+    }
+    
+    
+    .stats-section {
+      background: #047847;
+      color: white;
+      padding: 80px 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .stat-item h3 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #FFA200;
+      margin-bottom: 10px;
+    }
+    
+    .stat-item p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .values-section {
+      padding: 80px 0;
+    }
+    
+    .value-item {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      height: 100%;
+    }
+    
+    .value-item .icon {
+      width: 60px;
+      height: 60px;
+      background: #FFA200;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.5rem;
+      color: #2d014d;
+    }
+    
+    .value-item h4 {
+      color: #047847;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 100px; margin-right: 25px;">
+        <h1 class="sitename"></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul style="justify-content: center; display: flex; width: 100%;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about" class="active">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/#clients">Testimonials</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" data-aos="fade-up">
+            <h1>About Wanaag Travel & Logistics</h1>
+            <p>Your trusted partner for seamless travel experiences worldwide</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-right">
+            <div class="about-img">
+              <img src="{{ url_for('static', filename='assets/img/blog/blog-hero-1.jpg') }}" alt="About Wanaag Travel" class="img-fluid rounded">
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-left">
+            <div class="about-text">
+              <h2>Our Story</h2>
+              <p>Wanaag Travel & Logistics was founded with a simple yet powerful vision: to make travel accessible, affordable, and enjoyable for everyone. Since our establishment, we have been committed to providing exceptional travel services that exceed our clients' expectations.</p>
+              <p>Our journey began with a small team of travel enthusiasts who believed that every journey should be memorable. Today, we have grown into a comprehensive travel and logistics company serving clients across multiple continents.</p>
+              <p>We understand that travel is more than just reaching a destination – it's about creating experiences, building memories, and connecting people across cultures. That's why we go above and beyond to ensure every aspect of your journey is perfect.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2>Our Mission & Vision</h2>
+            <p>Driving our commitment to excellence in travel and logistics</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="mission-card">
+              <div class="icon">
+                <i class="bi bi-bullseye"></i>
+              </div>
+              <h3>Our Mission</h3>
+              <p>To provide exceptional travel and logistics services that connect people, cultures, and businesses worldwide. We are committed to delivering reliable, cost-effective solutions while maintaining the highest standards of customer service and operational excellence.</p>
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="vision-card">
+              <div class="icon">
+                <i class="bi bi-eye"></i>
+              </div>
+              <h3>Our Vision</h3>
+              <p>To become the leading travel and logistics company in the region, recognized for our innovation, reliability, and commitment to customer satisfaction. We envision a world where travel is seamless, accessible, and enriching for everyone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Values -->
+    <section class="values-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2>Our Core Values</h2>
+            <p>The principles that guide everything we do</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="value-item">
+              <div class="icon">
+                <i class="bi bi-heart"></i>
+              </div>
+              <h4>Customer First</h4>
+              <p>Our customers are at the heart of everything we do. We prioritize their needs and satisfaction above all else.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="value-item">
+              <div class="icon">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <h4>Reliability</h4>
+              <p>We deliver on our promises with consistent, dependable service that our clients can trust.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="value-item">
+              <div class="icon">
+                <i class="bi bi-lightbulb"></i>
+              </div>
+              <h4>Innovation</h4>
+              <p>We continuously improve our services through innovation and adoption of new technologies.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="value-item">
+              <div class="icon">
+                <i class="bi bi-people"></i>
+              </div>
+              <h4>Teamwork</h4>
+              <p>We believe in the power of collaboration and work together to achieve common goals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-item">
+              <h3>1000+</h3>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-item">
+              <h3>50+</h3>
+              <p>Countries Served</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-item">
+              <h3>5000+</h3>
+              <p>Successful Trips</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-item">
+              <h3>5+</h3>
+              <p>Years Experience</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column: Company Info & Social Media -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <div class="footer-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 50px; margin-bottom: 15px;">
+                <h3>Wanaag Travel Agency</h3>
+              </div>
+              <p>Your trusted partner for flights, hotels, tours, visas, and logistics.</p>
+              <div class="footer-social">
+                <div class="social-links">
+                  <a href="https://www.facebook.com/profile.php?id=100020513725614" class="facebook" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/252614683707" class="whatsapp" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                  <a href="http://www.linkedin.com/in/wanaag-travel-and-logistics-48b548258" class="linkedin" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle Column: Quick Links -->
+          <div class="col-lg-2 col-md-6">
+            <div class="footer-links">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Right Column: Newsletter & Contact -->
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-newsletter">
+              <h4>Stay Updated</h4>
+              <div class="newsletter-form">
+                <input type="email" placeholder="Enter email" required>
+                <button type="submit">Subscribe</button>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+252 614683707</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>travelwanaag@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Mogadishu, Somalia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              &copy; 2025 <strong><span>Wanaag Travel Agency</span></strong>. All rights reserved.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-legal-links">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    // Check if user is already logged in
+    (function(){
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // Hide admin access button if already logged in
+          document.getElementById('adminAccess').style.display = 'none';
+        }
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+</body>
+
+</html>

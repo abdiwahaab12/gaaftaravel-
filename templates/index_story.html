@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Wanaag Travel & Logistics - Your Trusted Travel Partner</title>
+  <meta name="description" content="Professional travel services including flights, hotels, visas, cargo, and transportation worldwide.">
+  <meta name="keywords" content="travel, flights, hotels, visas, cargo, transportation, logistics">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+  <style>
+    /* Custom styles for Wanaag Travel */
+    
+    /* Center navigation menu */
+    .navmenu ul {
+      justify-content: center !important;
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .navmenu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Custom Dark Background */
+    .blog-hero-item {
+      position: relative;
+    }
+    
+    .blog-hero-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+    
+    .blog-hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Override the first slide to use blog-hero-1.jpg */
+    .blog-hero-slider .swiper-slide:first-child .blog-hero-item img {
+      content: url('{{ url_for("static", filename="assets/img/blog/blog-hero-1.jpg") }}');
+    }
+    
+    /* Light Footer Styles */
+    .footer {
+      background: #f8f9fa !important;
+      color: #333333 !important;
+    }
+    
+    .footer-main {
+      background: #f8f9fa !important;
+      padding: 40px 0 30px !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .footer-bottom {
+      background: #FFA200 !important;
+      border-top: 1px solid #e9ecef !important;
+      padding: 15px 0 !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Newsletter Subscription */
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .newsletter-form input::placeholder {
+      color: #666;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #045b36;
+    }
+    
+    /* Social Media Icons */
+    .footer-social .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .footer-social .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      transform: translateY(-2px);
+    }
+    
+    /* About Us Section Styles */
+    .about-hero {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+    
+    .about-content h2 {
+      color: #047847;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+    
+    .about-content p {
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    
+    .about-image img {
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .stat-item {
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    .stat-number {
+      color: #FFA200;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .stat-label {
+      color: #047847;
+      font-weight: 600;
+      margin: 0;
+      font-size: 1rem;
+    }
+    
+    .footer h3, .footer h4, .footer h5 {
+      color: #047847 !important;
+    }
+    
+    .footer p {
+      color: #666666 !important;
+    }
+    
+    .footer-links ul li a {
+      color: #666666 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item {
+      color: #666666 !important;
+    }
+    
+    .footer-contact .contact-item strong {
+      color: #333333 !important;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847 !important;
+    }
+    
+    .footer-social .social-links a {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      color: white !important;
+    }
+    
+    .copyright {
+      color: #333333 !important;
+    }
+    
+    .footer-legal-links a {
+      color: #333333 !important;
+      transition: color 0.3s ease;
+    }
+    
+      .footer-legal-links a:hover {
+        color: #047847 !important;
+      }
+      
+      /* About Us Section Styles */
+      .about-hero {
+        padding: 80px 0;
+        background: #f8f9fa;
+      }
+      
+      .about-content h2 {
+        color: #047847;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+      }
+      
+      .about-content p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+      
+      .about-image img {
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      
+      .stat-item {
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+      }
+      
+      .stat-number {
+        color: #FFA200;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      
+      .stat-label {
+        color: #047847;
+        font-weight: 600;
+        margin: 0;
+        font-size: 1rem;
+      }
+    
+    
+    .sitename {
+      color: #047847 !important;
+    }
+    
+    .category {
+      background: #FFA200 !important;
+      color: #2d014d !important;
+    }
+    
+    .read-more {
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: #2d014d !important;
+    }
+    
+    .read-more:hover {
+      background: white !important;
+      color: #2d014d !important;
+    }
+    
+    /* Service Cards Styling */
+    .service-item {
+      background: white;
+      border-radius: 15px;
+      padding: 30px 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 1px solid #f0f0f0;
+    }
+    
+    .service-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .service-item .icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #047847, #FFA200);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    
+    .service-item .icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+    
+    .service-item h4 {
+      color: #047847;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .service-item p {
+      color: #666;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    /* Clients Section Styles */
+    .clients {
+      background: #f8f9fa;
+      padding: 80px 0;
+    }
+    
+    .stats-box {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    .stats-box h3 {
+      color: #047847;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .stats-box p {
+      color: #666;
+      font-weight: 500;
+    }
+    
+    /* Counter Animation Styles */
+    .counter {
+      color: #047847;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .counter-special {
+      color: #047847;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .counter.animate {
+      animation: countUp 0.5s ease-out;
+    }
+    
+    @keyframes countUp {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    /* Client Logos Slider Styles */
+    .client-logos-slider {
+      position: relative;
+      overflow: hidden;
+      margin: 40px 0;
+    }
+    
+    .client-logos-slider::before,
+    .client-logos-slider::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .client-logos-slider::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(248,249,250,1), transparent);
+    }
+    
+    .client-logos-slider::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(248,249,250,1), transparent);
+    }
+    
+    .client-logos-track {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding: 20px 0;
+      animation: client-logos-scroll 30s linear infinite;
+      will-change: transform;
+    }
+    
+    .client-logos-slider:hover .client-logos-track {
+      animation-play-state: paused;
+    }
+    
+    .client-logo {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+      opacity: 1;
+      filter: none;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .client-logo:hover {
+      transform: scale(1.1);
+      opacity: 1;
+      filter: none;
+    }
+    
+    @keyframes client-logos-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    
+    /* Enhanced Footer Styles */
+    .footer {
+      background: #f8f9fa;
+      color: #333;
+    }
+    
+    .footer-main {
+      padding: 60px 0 40px;
+    }
+    
+    .footer-info h3 {
+      color: #047847;
+      margin-bottom: 20px;
+    }
+    
+    .footer-info p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    
+    .footer-social h5 {
+      color: #047847;
+      margin-bottom: 15px;
+    }
+    
+    .footer-social .social-links a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      color: #fff;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    
+    /* Specific social media icon colors */
+    .footer-social .social-links a.facebook:hover {
+      background: #1877f2;
+    }
+    
+    .footer-social .social-links a.whatsapp:hover {
+      background: #25d366;
+    }
+    
+    .footer-social .social-links a.linkedin:hover {
+      background: #0077b5;
+    }
+    
+    .footer-links h4 {
+      color: #047847;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links ul li a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847;
+    }
+    
+    .footer-contact h4 {
+      color: #047847;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .footer-contact .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847;
+      font-size: 18px;
+      margin-right: 15px;
+      margin-top: 3px;
+    }
+    
+    .footer-contact .contact-item div {
+      color: #666;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847;
+      text-decoration: none;
+    }
+    
+    .footer-contact .contact-item a:hover {
+      text-decoration: underline;
+    }
+    
+    .footer-bottom {
+      background: #FFA200;
+      padding: 20px 0;
+      border-top: 1px solid #e9ecef;
+    }
+    
+    .footer-bottom .copyright {
+      color: #333;
+    }
+    
+    .footer-bottom .copyright strong {
+      color: #333;
+    }
+    
+    .footer-legal-links {
+      text-align: right;
+    }
+    
+    .footer-legal-links a {
+      color: #333;
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-legal-links a:hover {
+      color: #047847;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-legal-links {
+        text-align: center;
+        margin-top: 15px;
+      }
+      
+      .footer-legal-links a {
+        margin: 0 10px;
+      }
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel & Logistics" style="height: 90px; margin-right: 30px;">
+       
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul style="justify-content: center; display: flex; width: 100%;">
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="#clients">Testimonials</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- Travel Hero Section -->
+    <section id="travel-hero" class="blog-hero section">
+
+      <div class="container-fluid p-0" data-aos="fade">
+
+        <div class="blog-hero-slider swiper" id="blogHeroSlider">
+
+          <div class="swiper-wrapper" id="sliderWrapper">
+            <!-- Dynamic slides will be loaded here -->
+            <!-- Default slide shown while loading -->
+            <div class="swiper-slide" id="defaultSlide">
+              <div class="blog-hero-item">
+                <img src="{{ url_for('static', filename='assets/img/blog/blog-hero-1.jpg') }}" alt="Travel Hero Image" class="img-fluid">
+                <div class="blog-hero-content">
+                  <span class="category">TRAVEL</span>
+                  <h1>Welcome to Wanaag Travel</h1>
+                  <div class="meta">
+                    <span class="author">Your trusted travel partner</span>
+                  </div>
+                  <a href="#services" class="read-more">Explore Services <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </div><!-- End default slide item -->
+          </div>
+
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Travel Hero Section -->
+
+    <!-- About Us Section -->
+    <section id="about" class="about-hero section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-right">
+            <div class="about-image">
+              <img src="{{ url_for('static', filename='assets/img/blog/blog-hero-1.jpg') }}" alt="About Wanaag Travel" class="img-fluid rounded">
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-left">
+            <div class="about-content">
+              <h2 class="text-center">About Wanaag Travel & Logistics</h2>
+              <p>Wanaag Travel is a professional travel service provider dedicated to making your journeys seamless and unforgettable. We specialize in booking flights, hotels, and tours worldwide, providing personalized travel packages to meet every traveler's needs.</p>
+              <p>Our easy-to-use platform allows customers to plan trips, compare prices, and manage bookings with convenience and confidence. Whether it's a business trip, family vacation, or adventure tour, we make travel planning simple, reliable, and enjoyable.</p>
+              
+              <!-- Statistics -->
+              <div class="row mt-4">
+                <div class="col-6">
+                  <div class="stat-item text-center">
+                    <h3 class="stat-number">1000+</h3>
+                    <p class="stat-label">Happy Customers</p>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="stat-item text-center">
+                    <h3 class="stat-number">50+</h3>
+                    <p class="stat-label">Destinations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /About Us Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12">
+            <div class="section-title">
+              <h2>Our Services</h2>
+              <p>Comprehensive travel and logistics solutions for all your needs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-airplane"></i>
+              </div>
+              <div>
+                <h4>Flight Booking</h4>
+                <p>Book flights worldwide at the best rates with flexible options and convenient scheduling.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-building"></i>
+              </div>
+              <div>
+                <h4>Hotel Reservations</h4>
+                <p>Reserve top-rated hotels for comfort, convenience, and memorable stays at every destination.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-passport"></i>
+              </div>
+              <div>
+                <h4>Visa Services</h4>
+                <p>Expert guidance and fast processing for travel visas to destinations worldwide.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-box-seam"></i>
+              </div>
+              <div>
+                <h4>Cargo Services</h4>
+                <p>Reliable cargo and freight logistics worldwide with secure handling and tracking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-truck"></i>
+              </div>
+              <div>
+                <h4>Transportation</h4>
+                <p>Professional transportation services for individuals and groups with comfortable vehicles.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-headset"></i>
+              </div>
+              <div>
+                <h4>24/7 Support</h4>
+                <p>Our dedicated support team assists you anytime, ensuring smooth and stress-free travel planning.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Services Section -->
+
+    <!-- International Airline Partners Section -->
+    <section id="international-partners" class="partners section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12">
+            <div class="section-title">
+              <h2>International Airline Partners</h2>
+              <p>We partner with leading international airlines to provide you with global travel options</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- International Airline Logos Slider -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <div class="client-logos-slider">
+              <div class="client-logos-track">
+                <!-- International Airline Partners -->
+                <img class="client-logo" src="{{ url_for('static', filename='american.jpg') }}" alt="American Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='delta.jpg') }}" alt="Delta Air Lines">
+                <img class="client-logo" src="{{ url_for('static', filename='emirates.jpg') }}" alt="Emirates">
+                <img class="client-logo" src="{{ url_for('static', filename='ethiopian.jpg') }}" alt="Ethiopian Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='france.jpg') }}" alt="Air France">
+                <img class="client-logo" src="{{ url_for('static', filename='qatar.jpg') }}" alt="Qatar Airways">
+                
+                <!-- Duplicate for seamless loop -->
+                <img class="client-logo" src="{{ url_for('static', filename='american.jpg') }}" alt="American Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='delta.jpg') }}" alt="Delta Air Lines">
+                <img class="client-logo" src="{{ url_for('static', filename='emirates.jpg') }}" alt="Emirates">
+                <img class="client-logo" src="{{ url_for('static', filename='ethiopian.jpg') }}" alt="Ethiopian Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='france.jpg') }}" alt="Air France">
+                <img class="client-logo" src="{{ url_for('static', filename='qatar.jpg') }}" alt="Qatar Airways">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Local & Regional Airline Partners Section -->
+    <section id="local-partners" class="partners section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12">
+            <div class="section-title">
+              <h2>Local & Regional Airline Partners</h2>
+              <p>We partner with local and regional airlines to provide you with comprehensive travel options across Somalia and the Horn of Africa</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Local & Regional Airline Logos Slider -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <div class="client-logos-slider">
+              <div class="client-logos-track">
+                <!-- Local & Regional Airline Partners -->
+                <img class="client-logo" src="{{ url_for('static', filename='halla-airlines copy.png') }}" alt="Halla Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='AIRDJIB.jpg') }}" alt="Air Djibouti">
+                <img class="client-logo" src="{{ url_for('static', filename='daallo.png') }}" alt="Daallo Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='DAALLO.jpg') }}" alt="Daallo Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='DARUURO.png') }}" alt="Daruuro Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='FALCON.jpg') }}" alt="Falcon Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='halla-airlines.png') }}" alt="Halla Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='I-FLY.jpg') }}" alt="i-Fly Air">
+                <img class="client-logo" src="{{ url_for('static', filename='JUBBA LOGO.jpg') }}" alt="Jubba Airways">
+                <img class="client-logo" src="{{ url_for('static', filename='MAANDEEQ LOGO.jpg') }}" alt="Maandeeq Air">
+                <img class="client-logo" src="{{ url_for('static', filename='PPREMIER.jpg') }}" alt="Premier Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='ROYAL AIRLINE.jpg') }}" alt="Royal Air">
+                <img class="client-logo" src="{{ url_for('static', filename='SAACID.jpg') }}" alt="Saacid Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='SALAAM LOGO.jpg') }}" alt="Salaam Air Express">
+                
+                <!-- Duplicate for seamless loop -->
+                <img class="client-logo" src="{{ url_for('static', filename='halla-airlines copy.png') }}" alt="Halla Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='AIRDJIB.jpg') }}" alt="Air Djibouti">
+                <img class="client-logo" src="{{ url_for('static', filename='daallo.png') }}" alt="Daallo Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='DAALLO.jpg') }}" alt="Daallo Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='DARUURO.png') }}" alt="Daruuro Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='FALCON.jpg') }}" alt="Falcon Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='halla-airlines.png') }}" alt="Halla Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='I-FLY.jpg') }}" alt="i-Fly Air">
+                <img class="client-logo" src="{{ url_for('static', filename='JUBBA LOGO.jpg') }}" alt="Jubba Airways">
+                <img class="client-logo" src="{{ url_for('static', filename='MAANDEEQ LOGO.jpg') }}" alt="Maandeeq Air">
+                <img class="client-logo" src="{{ url_for('static', filename='PPREMIER.jpg') }}" alt="Premier Airlines">
+                <img class="client-logo" src="{{ url_for('static', filename='ROYAL AIRLINE.jpg') }}" alt="Royal Air">
+                <img class="client-logo" src="{{ url_for('static', filename='SAACID.jpg') }}" alt="Saacid Airline">
+                <img class="client-logo" src="{{ url_for('static', filename='SALAAM LOGO.jpg') }}" alt="Salaam Air Express">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Statistics Section -->
+    <section id="clients" class="clients section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12">
+            <div class="section-title">
+              <h2>Our Success Stories</h2>
+              <p>Numbers that speak for our commitment to excellence in travel services</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client Statistics -->
+        <div class="row mt-5">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="stats-box text-center">
+              <h3 class="counter" data-target="1000">0</h3>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="stats-box text-center">
+              <h3 class="counter" data-target="50">0</h3>
+              <p>Countries Served</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="stats-box text-center">
+              <h3 class="counter" data-target="5000">0</h3>
+              <p>Successful Trips</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="stats-box text-center">
+              <h3 class="counter-special">24/7</h3>
+              <p>Customer Support</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Client Statistics Section -->
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column: Company Info & Social Media -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <div class="footer-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 50px; margin-bottom: 15px;">
+                <h3>Wanaag Travel Agency</h3>
+              </div>
+              <p>Your trusted partner for flights, hotels, tours, visas, and logistics.</p>
+              <div class="footer-social">
+                <div class="social-links">
+                  <a href="https://www.facebook.com/profile.php?id=100020513725614" class="facebook" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/252614683707" class="whatsapp" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                  <a href="http://www.linkedin.com/in/wanaag-travel-and-logistics-48b548258" class="linkedin" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle Column: Quick Links -->
+          <div class="col-lg-2 col-md-6">
+            <div class="footer-links">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Right Column: Newsletter & Contact -->
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-newsletter">
+              <h4>Stay Updated</h4>
+              <div class="newsletter-form">
+                <input type="email" placeholder="Enter email" required>
+                <button type="submit">Subscribe</button>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+252 614683707</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>travelwanaag@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Mogadishu, Somalia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              &copy; 2025 <strong><span>Wanaag Travel Agency</span></strong>. All rights reserved.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-legal-links">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    
+    // Set current dates (only if elements exist)
+    const currentDate = new Date().toLocaleDateString();
+    const currentDateEl = document.getElementById('currentDate');
+    const currentDate2El = document.getElementById('currentDate2');
+    const currentDate3El = document.getElementById('currentDate3');
+    
+    if (currentDateEl) currentDateEl.textContent = currentDate;
+    if (currentDate2El) currentDate2El.textContent = currentDate;
+    if (currentDate3El) currentDate3El.textContent = currentDate;
+    
+    // Load homepage content and settings
+    async function loadHomepageContent() {
+      try {
+        // Use the new homepage content API endpoint
+        const response = await fetch('/api/homepage/content');
+        
+        if (response.ok) {
+          const data = await response.json();
+          
+          if (data.success && data.content) {
+            const content = data.content;
+            
+            // Update hero content
+            const heroTitle = document.querySelector('.blog-hero-content h1');
+            const heroSubtitle = document.querySelector('.blog-hero-content .meta');
+            
+            if (content.headline && heroTitle) {
+              heroTitle.textContent = content.headline;
+            }
+            
+            if (content.subtitle && heroSubtitle) {
+              heroSubtitle.innerHTML = `<span>${content.subtitle}</span>`;
+            }
+            
+            // Update background image
+            if (content.background_image) {
+              updateBackground(content.background_image);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load homepage content:', error);
+      }
+    }
+    
+    function updateBackground(backgroundPath) {
+      if (backgroundPath) {
+        // Update all slide backgrounds
+        const allSlides = document.querySelectorAll('.swiper-slide .blog-hero-item img');
+        allSlides.forEach((slide) => {
+          slide.src = backgroundPath;
+        });
+      }
+    }
+    
+    // Load dynamic slider content
+    async function loadSliderContent() {
+      try {
+        console.log('Loading slider content...');
+        const response = await fetch('/api/slider/slides');
+        const data = await response.json();
+        
+        console.log('Slider API response:', data);
+        
+        if (data.success && data.slides && data.slides.length > 0) {
+          const sliderWrapper = document.getElementById('sliderWrapper');
+          if (sliderWrapper) {
+            // Clear existing slides including the default one
+            sliderWrapper.innerHTML = '';
+            
+            // Create dynamic slides - show all slides, with or without images
+            data.slides.forEach((slide, index) => {
+              const slideElement = document.createElement('div');
+              slideElement.className = 'swiper-slide';
+              const imageSrc = slide.background_image;
+              
+              console.log(`Slide ${index + 1} - Image source:`, imageSrc);
+              console.log(`Slide ${index + 1} - Full slide data:`, slide);
+              
+              // Create slide HTML with conditional image handling - match admin preview exactly
+              let slideHTML = `
+                <div class="blog-hero-item" style="position: relative; height: 100vh; overflow: hidden; background: ${imageSrc && imageSrc.trim() !== '' ? 'transparent' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'};">`;
+              
+              if (imageSrc && imageSrc.trim() !== '') {
+                // Slide has an image - use exact same styling as admin preview
+                slideHTML += `
+                  <img src="${imageSrc}" 
+                       alt="${slide.title}" 
+                       class="img-fluid" 
+                       style="width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; background: #f8f9fa;"
+                       onload="console.log('✅ Image loaded successfully:', this.src)"
+                       onerror="console.error('❌ Failed to load image:', this.src); this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';"
+                       onabort="console.error('❌ Image load aborted:', this.src)">`;
+              } else {
+                // Slide has no image - use gradient background
+                slideHTML += `
+                  <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                    <i class="fas fa-image fa-2x opacity-50"></i>
+                  </div>`;
+                console.log(`Slide ${index + 1} - No image, using gradient background:`, slide.title);
+              }
+              
+              slideHTML += `
+                  <div class="blog-hero-content" style="position: relative; z-index: 2;">
+                    <span class="category">${slide.category || 'GENERAL'}</span>
+                    <h1>${slide.title}</h1>
+                    <div class="meta">
+                      ${slide.subtitle ? `<span class="author">${slide.subtitle}</span>` : ''}
+                      <span class="date" id="currentDate${index + 1}">${new Date().toLocaleDateString()}</span>
+                      ${slide.description ? `<span class="read-time">${slide.description}</span>` : ''}
+                    </div>
+                    <a href="${slide.button_link || '#services'}" class="read-more">
+                      ${slide.button_text || 'Learn More'} <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              `;
+              
+              slideElement.innerHTML = slideHTML;
+              sliderWrapper.appendChild(slideElement);
+            });
+            
+            // Initialize Swiper with new slides
+            if (typeof Swiper !== 'undefined') {
+              const swiper = new Swiper('#blogHeroSlider', {
+                loop: false,
+                speed: 1000,
+                effect: 'fade',
+                autoplay: {
+                  delay: 5000,
+                  disableOnInteraction: false,
+                },
+                slidesPerView: 1,
+                allowTouchMove: true,
+                navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+                },
+              });
+            }
+          }
+        } else {
+          // Initialize Swiper with default content
+          if (typeof Swiper !== 'undefined') {
+            const swiper = new Swiper('#blogHeroSlider', {
+              loop: false,
+              speed: 1000,
+              effect: 'fade',
+              autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+              },
+              slidesPerView: 1,
+              allowTouchMove: true,
+              navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              },
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error loading slider content:', error);
+      }
+    }
+
+    // Test function to check image accessibility
+    window.testImageAccess = function(imagePath) {
+      console.log('Testing image access for:', imagePath);
+      const img = new Image();
+      img.onload = function() {
+        console.log('✅ Image is accessible:', imagePath);
+      };
+      img.onerror = function() {
+        console.log('❌ Image is NOT accessible:', imagePath);
+      };
+      img.src = imagePath;
+    };
+
+    // Load content when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        loadHomepageContent();
+        loadSliderContent();
+        initCounterAnimations();
+      } catch (error) {
+        console.error('Error initializing animations:', error);
+      }
+    });
+    
+    // Counter Animation Function
+    function initCounterAnimations() {
+      try {
+        const counters = document.querySelectorAll('.counter');
+        console.log('Found', counters.length, 'counter elements');
+        
+        if (counters.length === 0) {
+          console.log('No counter elements found, skipping animation initialization');
+          return;
+        }
+        
+        const observerOptions = {
+          threshold: 0.7,
+          rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const counter = entry.target;
+              const target = parseInt(counter.getAttribute('data-target'));
+              if (!isNaN(target)) {
+                animateCounter(counter, target);
+                observer.unobserve(counter);
+              }
+            }
+          });
+        }, observerOptions);
+        
+        counters.forEach(counter => {
+          observer.observe(counter);
+        });
+        
+        console.log('Counter animations initialized for', counters.length, 'elements');
+      } catch (error) {
+        console.error('Error initializing counter animations:', error);
+      }
+    }
+    
+    function animateCounter(element, target) {
+      try {
+        if (!element || isNaN(target)) {
+          console.error('Invalid element or target for animation');
+          return;
+        }
+        
+        let current = 0;
+        const increment = target / 100; // Adjust speed by changing divisor
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          
+          // Add + sign for numbers >= 1000
+          if (target >= 1000) {
+            element.textContent = Math.floor(current) + '+';
+          } else {
+            element.textContent = Math.floor(current) + '+';
+          }
+          
+          // Add animation class
+          element.classList.add('animate');
+          setTimeout(() => {
+            element.classList.remove('animate');
+          }, 500);
+          
+        }, 20); // Adjust speed by changing interval
+      } catch (error) {
+        console.error('Error animating counter:', error);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

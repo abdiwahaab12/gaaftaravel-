@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Our Services - Wanaag Travel & Logistics</title>
+  <meta name="description" content="Comprehensive travel and logistics services including flights, hotels, visas, cargo, and transportation worldwide.">
+  
+  <meta name="keywords" content="travel services, flights, hotels, visas, cargo, transportation, logistics">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+  <style>
+    /* Custom styles for Services page */
+    
+    /* Center navigation menu */
+    .navmenu ul {
+      justify-content: center !important;
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .navmenu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Light Footer Styles */
+    .footer {
+      background: #f8f9fa !important;
+      color: #333333 !important;
+    }
+    
+    .footer-main {
+      background: #f8f9fa !important;
+      padding: 40px 0 30px !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .footer-bottom {
+      background: #FFA200 !important;
+      border-top: 1px solid #e9ecef !important;
+      padding: 15px 0 !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Newsletter Subscription */
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .newsletter-form input::placeholder {
+      color: #666;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #045b36;
+    }
+    
+    /* Social Media Icons */
+    .footer-social .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .footer-social .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      transform: translateY(-2px);
+    }
+    
+    /* Specific social media icon colors */
+    .footer-social .social-links a.facebook:hover {
+      background: #1877f2;
+    }
+    
+    .footer-social .social-links a.whatsapp:hover {
+      background: #25d366;
+    }
+    
+    .footer-social .social-links a.linkedin:hover {
+      background: #0077b5;
+    }
+    
+    .footer h3, .footer h4, .footer h5 {
+      color: #047847 !important;
+    }
+    
+    .footer p {
+      color: #666666 !important;
+    }
+    
+    .footer-links ul li a {
+      color: #666666 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item {
+      color: #666666 !important;
+    }
+    
+    .footer-contact .contact-item strong {
+      color: #333333 !important;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847 !important;
+    }
+    
+    .footer-social .social-links a {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      color: white !important;
+    }
+    
+    .copyright {
+      color: #333333 !important;
+    }
+    
+    .footer-legal-links a {
+      color: #333333 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-legal-links a:hover {
+      color: #047847 !important;
+    }
+    
+    .admin-access {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #FFA200;
+      color: #2d014d;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+    }
+    
+    .admin-access:hover {
+      background: #fff;
+      color: #2d014d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 162, 0, 0.4);
+    }
+    
+    
+    .sitename {
+      color: #047847 !important;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #047847 0%, #FFA200 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .hero-section p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .services-section {
+      padding: 80px 0;
+    }
+    
+    .service-card {
+      background: white;
+      border-radius: 15px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+      margin-bottom: 30px;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .service-card .icon {
+      width: 80px;
+      height: 80px;
+      background: #FFA200;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      font-size: 2rem;
+      color: #2d014d;
+    }
+    
+    .service-card h3 {
+      color: #047847;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .service-card p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    
+    .service-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 25px;
+    }
+    
+    .service-features li {
+      padding: 5px 0;
+      color: #666;
+    }
+    
+    .service-features li:before {
+      content: "✓";
+      color: #047847;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .btn-service {
+      background: #047847;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-service:hover {
+      background: #FFA200;
+      color: #2d014d;
+      transform: translateY(-2px);
+    }
+    
+    .process-section {
+      background: #f8f9fa;
+      padding: 80px 0;
+    }
+    
+    .process-step {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .process-step .step-number {
+      width: 60px;
+      height: 60px;
+      background: #FFA200;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d014d;
+    }
+    
+    .process-step h4 {
+      color: #047847;
+      margin-bottom: 15px;
+    }
+    
+    .cta-section {
+      background: #047847;
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 20px;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .btn-cta {
+      background: #FFA200;
+      color: #2d014d;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-cta:hover {
+      background: white;
+      color: #2d014d;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 100px; margin-right: 25px;">
+      
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul style="justify-content: center; display: flex; width: 100%;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/services" class="active">Services</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/#clients">Testimonials</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" data-aos="fade-up">
+            <h1>Our Services</h1>
+            <p>Comprehensive travel and logistics solutions for all your needs</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2>What We Offer</h2>
+            <p>Professional services tailored to meet your travel and logistics requirements</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card" id="flights">
+              <div class="icon">
+                <i class="bi bi-airplane"></i>
+              </div>
+              <h3>Flight Booking</h3>
+              <p>Book flights worldwide at the best rates with flexible options and convenient scheduling.</p>
+              <ul class="service-features">
+                <li>Best price guarantee</li>
+                <li>500+ airline partners</li>
+                <li>24/7 booking support</li>
+                <li>Flexible cancellation</li>
+                <li>Multi-city options</li>
+              </ul>
+              <button class="btn btn-service">Book Now</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-card" id="hotels">
+              <div class="icon">
+                <i class="bi bi-building"></i>
+              </div>
+              <h3>Hotel Reservations</h3>
+              <p>Reserve top-rated hotels for comfort, convenience, and memorable stays at every destination.</p>
+              <ul class="service-features">
+                <li>Verified accommodations</li>
+                <li>Best location options</li>
+                <li>Competitive rates</li>
+                <li>Instant confirmation</li>
+                <li>Customer reviews</li>
+              </ul>
+              <button class="btn btn-service">Find Hotels</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card" id="visas">
+              <div class="icon">
+                <i class="bi bi-passport"></i>
+              </div>
+              <h3>Visa Services</h3>
+              <p>Expert guidance and fast processing for travel visas to destinations worldwide.</p>
+              <ul class="service-features">
+                <li>Expert consultation</li>
+                <li>Fast processing</li>
+                <li>Document assistance</li>
+                <li>Multiple countries</li>
+                <li>Success guarantee</li>
+              </ul>
+              <button class="btn btn-service">Apply Now</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-card" id="cargo">
+              <div class="icon">
+                <i class="bi bi-box-seam"></i>
+              </div>
+              <h3>Cargo Services</h3>
+              <p>Reliable cargo and freight logistics worldwide with secure handling and tracking.</p>
+              <ul class="service-features">
+                <li>Global network</li>
+                <li>Real-time tracking</li>
+                <li>Secure handling</li>
+                <li>Insurance coverage</li>
+                <li>Customs clearance</li>
+              </ul>
+              <button class="btn btn-service">Get Quote</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-card" id="transportation">
+              <div class="icon">
+                <i class="bi bi-truck"></i>
+              </div>
+              <h3>Transportation</h3>
+              <p>Professional transportation services for individuals and groups with comfortable vehicles.</p>
+              <ul class="service-features">
+                <li>Luxury vehicles</li>
+                <li>Professional drivers</li>
+                <li>Airport transfers</li>
+                <li>City tours</li>
+                <li>Group transportation</li>
+              </ul>
+              <button class="btn btn-service">Book Ride</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-card" id="support">
+              <div class="icon">
+                <i class="bi bi-headset"></i>
+              </div>
+              <h3>24/7 Support</h3>
+              <p>Our dedicated support team assists you anytime, ensuring smooth and stress-free travel planning.</p>
+              <ul class="service-features">
+                <li>Round-the-clock support</li>
+                <li>Multi-language service</li>
+                <li>Emergency assistance</li>
+                <li>Travel updates</li>
+                <li>Problem resolution</li>
+              </ul>
+              <button class="btn btn-service">Contact Us</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2>How We Work</h2>
+            <p>Simple steps to get your travel and logistics needs sorted</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="process-step">
+              <div class="step-number">1</div>
+              <h4>Consultation</h4>
+              <p>Tell us about your travel needs and requirements. We listen carefully to understand your preferences.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="process-step">
+              <div class="step-number">2</div>
+              <h4>Planning</h4>
+              <p>We create a customized travel plan with the best options for flights, hotels, and services.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="process-step">
+              <div class="step-number">3</div>
+              <h4>Booking</h4>
+              <p>We handle all bookings and arrangements, ensuring everything is confirmed and ready for your trip.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="process-step">
+              <div class="step-number">4</div>
+              <h4>Support</h4>
+              <p>We provide continuous support throughout your journey, ensuring a smooth and enjoyable experience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" data-aos="fade-up">
+            <h2>Ready to Start Your Journey?</h2>
+            <p>Contact us today for a personalized quote and let us make your travel dreams come true.</p>
+            <a href="/#contact" class="btn btn-cta">Get Started Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column: Company Info & Social Media -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <div class="footer-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 50px; margin-bottom: 15px;">
+                <h3>Wanaag Travel & Logistics</h3>
+              </div>
+              <p>Your trusted partner for flights, hotels, tours, visas, and logistics.</p>
+              <div class="footer-social">
+                <div class="social-links">
+                  <a href="https://www.facebook.com/profile.php?id=100020513725614" class="facebook" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/252614683707" class="whatsapp" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                  <a href="http://www.linkedin.com/in/wanaag-travel-and-logistics-48b548258" class="linkedin" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle Column: Quick Links -->
+          <div class="col-lg-2 col-md-6">
+            <div class="footer-links">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Right Column: Newsletter & Contact -->
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-newsletter">
+              <h4>Stay Updated</h4>
+              <div class="newsletter-form">
+                <input type="email" placeholder="Enter email" required>
+                <button type="submit">Subscribe</button>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+252 614683707</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>travelwanaag@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Mogadishu, Somalia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              &copy; 2025 <strong><span>Wanaag Travel Agency</span></strong>. All rights reserved.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-legal-links">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    // Check if user is already logged in
+    (function(){
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // Hide admin access button if already logged in
+          document.getElementById('adminAccess').style.display = 'none';
+        }
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+</body>
+
+</html>

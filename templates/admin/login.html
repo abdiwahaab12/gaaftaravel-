@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Wanaag Travel & Logistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+    <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --brand-green: #1482C5;
+            --brand-orange: #2B2E74;
+            --dark-purple: #2d014d;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-orange) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .admin-login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px;
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-orange) 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-header .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-header .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        .admin-header .logo .fallback-logo {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-green);
+            font-size: 24px;
+            font-weight: bold;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .admin-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+        }
+        
+        .admin-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .admin-body {
+            padding: 40px 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            color: var(--dark-purple);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            z-index: 2;
+        }
+        
+        .form-control {
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            z-index: 3;
+            padding: 4px 6px;
+        }
+
+        .password-toggle:hover {
+            color: var(--brand-orange);
+        }
+
+        .password-input {
+            padding-right: 44px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 0.2rem rgba(20, 130, 197, 0.25);
+            background: white;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-orange) 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(20, 130, 197, 0.3);
+        }
+        
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .forgot-password a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--brand-orange);
+        }
+        
+        .back-to-website {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-to-website a {
+            color: var(--brand-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .back-to-website a:hover {
+            color: var(--brand-orange);
+        }
+        
+        .admin-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-login-container {
+                flex-direction: column;
+                max-width: 400px;
+            }
+            
+            .admin-header {
+                padding: 30px 20px;
+            }
+            
+            .admin-body {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-header">
+            <div class="logo">
+                <img src="/static/logo.png" alt="Wanaag Travel Logo" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                     onload="console.log('Logo loaded successfully')">
+                <div class="fallback-logo">
+                    <i class="fas fa-plane" style="font-size: 20px;"></i>
+                </div>
+            </div>
+            <h1>Admin Portal</h1>
+            <p>Secure Access Required</p>
+            <div class="admin-badge">
+                <i class="fas fa-shield-alt"></i> ADMIN ONLY
+            </div>
+        </div>
+        
+        <div class="admin-body">
+            <div id="alertContainer"></div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="email" class="form-label">Admin Email</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div id="emailError" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control password-input" id="password" name="password" required>
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">
+                            <i class="fas fa-eye-slash" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                    <div id="passwordError" class="error-message"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-login" id="loginBtn">
+                    <span class="loading-spinner" id="loadingSpinner"></span>
+                    <span id="loginText">Access Admin Panel</span>
+                </button>
+            </form>
+            
+            <div class="forgot-password">
+                <a href="#" id="forgotPasswordLink">
+                    <i class="fas fa-key me-2"></i>
+                    Forgot Password?
+                </a>
+            </div>
+            
+            <div class="back-to-website">
+                <a href="/admin/dashboard">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Open Admin Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+        togglePasswordBtn.addEventListener('click', function() {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePasswordIcon.className = isPassword ? 'fas fa-eye' : 'fas fa-eye-slash';
+            togglePasswordBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const loginText = document.getElementById('loginText');
+            
+            // Clear previous errors
+            clearErrors();
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            loginText.textContent = 'Authenticating...';
+            
+            try {
+                console.log('Admin login attempt:', { email, password: '***' });
+                const response = await fetch('/api/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                console.log('Admin login response status:', response.status);
+                const data = await response.json();
+                console.log('Admin login response data:', data);
+                
+                if (response.ok) {
+                    // Store token
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userRole', data.role);
+                    localStorage.setItem('userName', data.name);
+                    
+                    // Show success message
+                    showAlert('Authentication successful! Redirecting to admin dashboard...', 'success');
+                    
+                    // Redirect to admin dashboard
+                    setTimeout(() => {
+                        window.location.href = '/admin/dashboard';
+                    }, 1500);
+                } else {
+                    showAlert(data.error || 'Authentication failed. Please check your credentials.', 'danger');
+                }
+            } catch (error) {
+                console.error('Admin login error:', error);
+                showAlert('Network error. Please try again.', 'danger');
+            } finally {
+                // Reset button state
+                loginBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+                loginText.textContent = 'Access Admin Panel';
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+        }
+        
+        function clearErrors() {
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+        
+        // Forgot Password functionality
+        document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            
+            if (!email) {
+                showAlert('Please enter your email address first.', 'warning');
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            // Show confirmation dialog
+            if (confirm(`Send password reset instructions to ${email}?`)) {
+                handleForgotPassword(email);
+            }
+        });
+        
+        async function handleForgotPassword(email) {
+            try {
+                showAlert('Sending verification code...', 'info');
+                
+                const response = await fetch('/api/forgot-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert(`Verification code sent to ${email}. Check your email and console for the code.`, 'success');
+                    
+                    // Show the code in console for development (remove in production)
+                    if (data.code) {
+                        console.log(`Your verification code: ${data.code}`);
+                        showAlert(`Verification code: ${data.code} (check console for development)`, 'info');
+                    }
+                    
+                    // Redirect to reset password page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = `/admin/reset-password?email=${encodeURIComponent(email)}`;
+                    }, 2000);
+                } else {
+                    showAlert(data.error || 'Failed to send verification code.', 'danger');
+                }
+                
+            } catch (error) {
+                console.error('Forgot password error:', error);
+                showAlert('Network error. Please try again.', 'danger');
+            }
+        }
+
+        // Debug logo loading
+        window.addEventListener('load', function() {
+            const logoImg = document.querySelector('.logo img');
+            if (logoImg) {
+                console.log('Logo image element found:', logoImg.src);
+                
+                logoImg.addEventListener('load', function() {
+                    console.log('Logo loaded successfully');
+                });
+                
+                logoImg.addEventListener('error', function() {
+                    console.log('Logo failed to load, showing fallback');
+                    this.style.display = 'none';
+                    const fallback = this.nextElementSibling;
+                    if (fallback) {
+                        fallback.style.display = 'flex';
+                    }
+                });
+                
+                // Test logo accessibility
+                fetch('/api/test-logo')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Logo test result:', data);
+                    })
+                    .catch(error => {
+                        console.log('Logo test error:', error);
+                    });
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('token');
+            console.log('Admin login page loaded, checking for existing token:', token ? 'exists' : 'none');
+            if (token) {
+                // Test if token is still valid by making a test request
+                fetch('/api/health', {
+                    credentials: 'include'
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Token appears valid, redirecting to admin dashboard');
+                        window.location.href = '/admin/dashboard';
+                    } else {
+                        console.log('Token appears invalid, clearing localStorage');
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('userRole');
+                        localStorage.removeItem('userName');
+                    }
+                }).catch(error => {
+                    console.log('Error checking token validity:', error);
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userName');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

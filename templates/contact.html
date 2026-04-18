@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Contact Us - Wanaag Travel & Logistics</title>
+  <meta name="description" content="Get in touch with Wanaag Travel & Logistics for all your travel and logistics needs. Professional support and expert guidance.">
+  <meta name="keywords" content="contact, travel agency, logistics, support, booking, inquiry">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+  <style>
+    /* Custom styles for Contact page */
+    
+    /* Center navigation menu */
+    .navmenu ul {
+      justify-content: center !important;
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .navmenu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Light Footer Styles */
+    .footer {
+      background: #f8f9fa !important;
+      color: #333333 !important;
+    }
+    
+    .footer-main {
+      background: #f8f9fa !important;
+      padding: 40px 0 30px !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .footer-bottom {
+      background: #FFA200 !important;
+      border-top: 1px solid #e9ecef !important;
+      padding: 15px 0 !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Newsletter Subscription */
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .newsletter-form input::placeholder {
+      color: #666;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #045b36;
+    }
+    
+    /* Social Media Icons */
+    .footer-social .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .footer-social .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      transform: translateY(-2px);
+    }
+    
+    /* Specific social media icon colors */
+    .footer-social .social-links a.facebook:hover {
+      background: #1877f2;
+    }
+    
+    .footer-social .social-links a.whatsapp:hover {
+      background: #25d366;
+    }
+    
+    .footer-social .social-links a.linkedin:hover {
+      background: #0077b5;
+    }
+    
+    .footer h3, .footer h4, .footer h5 {
+      color: #047847 !important;
+    }
+    
+    .footer p {
+      color: #666666 !important;
+    }
+    
+    .footer-links ul li a {
+      color: #666666 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item {
+      color: #666666 !important;
+    }
+    
+    .footer-contact .contact-item strong {
+      color: #333333 !important;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847 !important;
+    }
+    
+    .footer-social .social-links a {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      color: white !important;
+    }
+    
+    .copyright {
+      color: #333333 !important;
+    }
+    
+    .footer-legal-links a {
+      color: #333333 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-legal-links a:hover {
+      color: #047847 !important;
+    }
+    
+    
+    .admin-access {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #FFA200;
+      color: #2d014d;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+    }
+    
+    .admin-access:hover {
+      background: #fff;
+      color: #2d014d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 162, 0, 0.4);
+    }
+    
+    .sitename {
+      color: #047847 !important;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #047847 0%, #FFA200 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .hero-section p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .contact-section {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+    
+    .contact-info-section {
+      padding: 40px 0;
+    }
+    
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    
+    .contact-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 20px;
+      margin-top: 5px;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    
+    .contact-details h4 {
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .contact-details p {
+      color: #666;
+      margin: 0;
+      font-size: 1rem;
+    }
+    
+    .contact-details a {
+      color: #047847;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .contact-details a:hover {
+      color: #FFA200;
+    }
+    
+    .contact-form-section {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px 15px;
+      font-size: 1rem;
+      width: 100%;
+      transition: border-color 0.3s ease;
+      background: white;
+    }
+    
+    .form-control:focus {
+      border-color: #047847;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(4, 120, 71, 0.1);
+    }
+    
+    .form-control::placeholder {
+      color: #999;
+    }
+    
+    .btn-send {
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .btn-send:hover {
+      background: #036a3f;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 100px; margin-right: 25px;">
+    
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul style="justify-content: center; display: flex; width: 100%;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/#clients">Testimonials</a></li>
+          <li><a href="/contact" class="active">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" data-aos="fade-up">
+            <h1>Contact Us</h1>
+            <p>Get in touch with our travel experts for personalized assistance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2>CONTACT US</h2>
+            <p>Get in touch with our travel experts</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="contact-info-section">
+              <div class="contact-info-item">
+                <div class="contact-icon">
+                  <i class="bi bi-geo-alt"></i>
+                </div>
+                <div class="contact-details">
+                  <h4>Location</h4>
+                  <p>Mogadishu, Somalia</p>
+                </div>
+              </div>
+              
+              <div class="contact-info-item">
+                <div class="contact-icon">
+                  <i class="bi bi-telephone"></i>
+                </div>
+                <div class="contact-details">
+                  <h4>Phone</h4>
+                  <p><a href="tel:+252614683707">+252 614683707</a></p>
+                </div>
+              </div>
+              
+              <div class="contact-info-item">
+                <div class="contact-icon">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <div class="contact-details">
+                  <h4>Email</h4>
+                  <p><a href="mailto:travelwanaag@gmail.com">travelwanaag@gmail.com</a></p>
+                </div>
+              </div>
+              
+              <div class="contact-info-item">
+                <div class="contact-icon">
+                  <i class="bi bi-whatsapp"></i>
+                </div>
+                <div class="contact-details">
+                  <h4>WhatsApp</h4>
+                  <p><a href="https://wa.me/252614683707" target="_blank">+252 614683707</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="contact-form-section">
+              <form id="contactForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="firstName" placeholder="Your Name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="message" rows="5" placeholder="Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-send">Send Message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column: Company Info & Social Media -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <div class="footer-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 50px; margin-bottom: 15px;">
+                <h3>Wanaag Travel Agency</h3>
+              </div>
+              <p>Your trusted partner for flights, hotels, tours, visas, and logistics.</p>
+              <div class="footer-social">
+                <div class="social-links">
+                  <a href="https://www.facebook.com/profile.php?id=100020513725614" class="facebook" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/252614683707" class="whatsapp" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                  <a href="http://www.linkedin.com/in/wanaag-travel-and-logistics-48b548258" class="linkedin" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle Column: Quick Links -->
+          <div class="col-lg-2 col-md-6">
+            <div class="footer-links">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Right Column: Newsletter & Contact -->
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-newsletter">
+              <h4>Stay Updated</h4>
+              <div class="newsletter-form">
+                <input type="email" placeholder="Enter email" required>
+                <button type="submit">Subscribe</button>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+252 614683707</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>travelwanaag@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Mogadishu, Somalia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              &copy; 2025 <strong><span>Wanaag Travel Agency</span></strong>. All rights reserved.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-legal-links">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Service</a>
+              <a href="#cookies">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    // Check if user is already logged in
+    (function(){
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // Hide admin access button if already logged in
+          document.getElementById('adminAccess').style.display = 'none';
+        }
+      } catch (e) { /* ignore */ }
+    })();
+    
+    // Contact Form Submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = {
+        firstName: document.getElementById('firstName').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+      
+      // Simple validation
+      if (!formData.firstName || !formData.email || !formData.subject || !formData.message) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      // Simulate form submission
+      alert('Thank you for your message! We will get back to you within 24 hours.');
+      
+      // Reset form
+      this.reset();
+    });
+  </script>
+
+</body>
+
+</html>

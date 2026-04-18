@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set JWT Token</title>
+</head>
+<body>
+    <h1>JWT Token Setter</h1>
+    <p>Click the button below to set the JWT token in your browser:</p>
+    <button onclick="setToken()">Set JWT Token</button>
+    <p id="status"></p>
+    
+    <script>
+        function setToken() {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc2MTA0ODYxMSwianRpIjoiYjYwOGM0NmItNDhlMC00MmE4LTk0N2QtNzY2Y2FkNWE2YmZiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzYxMDQ4NjExLCJleHAiOjE3NjEwOTE4MTF9.I3m2kZfbZ43LZ3WVILPoG_bkpgLb6j_wy0ex51Aj7HY';
+            localStorage.setItem('token', token);
+            document.getElementById('status').innerHTML = '✅ Token set successfully! You can now go back to the dashboard.';
+            document.getElementById('status').style.color = 'green';
+        }
+    </script>
+</body>
+</html>

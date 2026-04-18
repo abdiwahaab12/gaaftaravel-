@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanaag Travel Agency</title>
+    
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+    <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --brand-green: #047847;
+            --brand-orange: #FFA200;
+            --text-on-dark: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            /* Dynamic background will be set by JavaScript */
+            background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            background-color: #f6f8f7;
+            position: relative;
+        }
+        
+        /* Dark overlay for text readability */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Admin access button */
+        .admin-access {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--brand-orange);
+            color: #2d014d;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+        }
+        
+        .admin-access:hover {
+            background: #fff;
+            color: #2d014d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 162, 0, 0.4);
+        }
+        
+        /* Main content overlay */
+        .content-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .content-overlay.visible {
+            opacity: 1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        /* Category tag */
+        .category-tag {
+            background: var(--brand-orange);
+            color: #2d014d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+        
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .cta-button {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d014d;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: white;
+            color: #2d014d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Navigation arrows (optional) */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-arrow.left {
+            left: 30px;
+        }
+        
+        .nav-arrow.right {
+            right: 30px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .admin-access {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .nav-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Access Button -->
+    <a href="/dashboard" class="admin-access" id="adminAccess">
+        <i class="fas fa-cog me-2"></i>Admin
+    </a>
+    
+    <!-- Navigation Arrows (Optional) -->
+    <button class="nav-arrow left" onclick="previousSlide()">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="nav-arrow right" onclick="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    
+    <!-- Main Content Overlay -->
+    <div class="content-overlay" id="contentOverlay">
+        <div class="hero-content">
+            <div class="category-tag" id="categoryTag">TRAVEL</div>
+            <h1 class="hero-title" id="heroTitle">Wanaag Travel & Logistics</h1>
+            <div class="hero-meta" id="heroMeta">
+                <span><i class="fas fa-user"></i> Wanaag Team</span>
+                <span><i class="fas fa-calendar"></i> <span id="currentDate"></span></span>
+                <span><i class="fas fa-clock"></i> 24/7 Service</span>
+            </div>
+            <a href="#contact" class="cta-button" id="ctaButton" style="display: none;">
+                Get Started <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is already logged in
+        (function(){
+            try {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    // Hide admin access button if already logged in
+                    document.getElementById('adminAccess').style.display = 'none';
+                }
+            } catch (e) { /* ignore */ }
+        })();
+        
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+        
+        // Load homepage content and settings
+        async function loadHomepageContent() {
+            try {
+                const [contentRes, backgroundRes] = await Promise.all([
+                    fetch('/api/website/content'),
+                    fetch('/api/homepage/background')
+                ]);
+                
+                if (contentRes.ok) {
+                    const contentData = await contentRes.json();
+                    const content = contentData.content || {};
+                    
+                    // Update hero content if available
+                    if (content.hero) {
+                        const hero = content.hero;
+                        if (hero.title) {
+                            document.getElementById('heroTitle').textContent = hero.title;
+                        }
+                        if (hero.subtitle) {
+                            // You can add subtitle if needed
+                        }
+                    }
+                    
+                    // Check if content overlay should be visible
+                    const showContent = content.homepage?.show_content !== 'false';
+                    if (showContent) {
+                        document.getElementById('contentOverlay').classList.add('visible');
+                    }
+                }
+                
+                if (backgroundRes.ok) {
+                    const backgroundData = await backgroundRes.json();
+                    if (backgroundData.success && backgroundData.background_image) {
+                        updateBackground(backgroundData.background_image);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load homepage content:', error);
+                // Show default content if loading fails
+                document.getElementById('contentOverlay').classList.add('visible');
+            }
+        }
+        
+        function updateBackground(backgroundPath) {
+            if (backgroundPath) {
+                document.body.style.backgroundImage = `url("${backgroundPath}")`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+                document.body.style.backgroundAttachment = 'fixed';
+            }
+        }
+        
+        // Navigation functions (optional)
+        function previousSlide() {
+            // Add slide navigation logic here if needed
+            console.log('Previous slide');
+        }
+        
+        function nextSlide() {
+            // Add slide navigation logic here if needed
+            console.log('Next slide');
+        }
+        
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHomepageContent();
+        });
+    </script>
+</body>
+</html>

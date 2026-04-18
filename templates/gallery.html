@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Gallery - Wanaag Travel & Logistics</title>
+  <meta name="description" content="Explore our gallery of travel destinations, services, and memorable moments from Wanaag Travel & Logistics.">
+  <meta name="keywords" content="gallery, travel photos, destinations, services, travel memories">
+  
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="icon" type="image/png">
+  <link href="{{ url_for('static', filename='logo.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+  <style>
+    /* Custom styles for Gallery page */
+    
+    /* Center navigation menu */
+    .navmenu ul {
+      justify-content: center !important;
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .navmenu {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Light Footer Styles */
+    .footer {
+      background: #f8f9fa !important;
+      color: #333333 !important;
+    }
+    
+    .footer-main {
+      background: #f8f9fa !important;
+      padding: 40px 0 30px !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .footer-bottom {
+      background: #FFA200 !important;
+      border-top: 1px solid #e9ecef !important;
+      padding: 15px 0 !important;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Newsletter Subscription */
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .newsletter-form input::placeholder {
+      color: #666;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #047847;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #045b36;
+    }
+    
+    /* Social Media Icons */
+    .footer-social .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .footer-social .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #047847;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      background: #045b36;
+      transform: translateY(-2px);
+    }
+    
+    /* Specific social media icon colors */
+    .footer-social .social-links a.facebook:hover {
+      background: #1877f2;
+    }
+    
+    .footer-social .social-links a.whatsapp:hover {
+      background: #25d366;
+    }
+    
+    .footer-social .social-links a.linkedin:hover {
+      background: #0077b5;
+    }
+    
+    .footer h3, .footer h4, .footer h5 {
+      color: #047847 !important;
+    }
+    
+    .footer p {
+      color: #666666 !important;
+    }
+    
+    .footer-links ul li a {
+      color: #666666 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links ul li a:hover {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item {
+      color: #666666 !important;
+    }
+    
+    .footer-contact .contact-item strong {
+      color: #333333 !important;
+    }
+    
+    .footer-contact .contact-item a {
+      color: #047847 !important;
+    }
+    
+    .footer-contact .contact-item i {
+      color: #047847 !important;
+    }
+    
+    .footer-social .social-links a {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-social .social-links a:hover {
+      color: white !important;
+    }
+    
+    .copyright {
+      color: #333333 !important;
+    }
+    
+    .footer-legal-links a {
+      color: #333333 !important;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-legal-links a:hover {
+      color: #047847 !important;
+    }
+    
+    
+    .admin-access {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #FFA200;
+      color: #2d014d;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+    }
+    
+    .admin-access:hover {
+      background: #fff;
+      color: #2d014d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 162, 0, 0.4);
+    }
+    
+    .sitename {
+      color: #047847 !important;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #047847 0%, #059669 50%, #FFA200 100%);
+      color: white;
+      padding: 120px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-section p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-section p {
+        font-size: 1.1rem;
+      }
+    }
+    
+    .gallery-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+    
+    .gallery-filter {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .filter-btn {
+      background: white;
+      border: 2px solid #047847;
+      color: #047847;
+      padding: 12px 30px;
+      margin: 8px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #047847;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(4, 120, 71, 0.3);
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .gallery-item {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gallery-content {
+      padding: 30px;
+      position: relative;
+    }
+    
+    .gallery-category {
+      background: linear-gradient(135deg, #FFA200 0%, #FF8C00 100%);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 10px rgba(255, 162, 0, 0.3);
+    }
+    
+    .gallery-title {
+      color: #047847;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      min-height: 2.6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .gallery-description {
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .gallery-date {
+      color: #999;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .gallery-date::before {
+      content: "📅";
+      font-size: 0.8rem;
+    }
+    
+    .featured-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #FFA200 0%, #FF8C00 100%);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 3px 15px rgba(255, 162, 0, 0.4);
+      z-index: 2;
+    }
+    
+    .gallery-item {
+      position: relative;
+    }
+    
+    /* Professional overlay effect */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(4, 120, 71, 0.1) 0%, rgba(255, 162, 0, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+    
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 20px;
+      }
+      
+      .gallery-item img {
+        height: 250px;
+      }
+      
+      .gallery-content {
+        padding: 25px;
+      }
+      
+      .filter-btn {
+        padding: 10px 20px;
+        margin: 5px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    .no-gallery-items {
+      text-align: center;
+      padding: 100px 20px;
+      color: #666;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin: 40px auto;
+      max-width: 500px;
+    }
+    
+    .no-gallery-items i {
+      font-size: 5rem;
+      margin-bottom: 30px;
+      color: #047847;
+      opacity: 0.3;
+    }
+    
+    .no-gallery-items h3 {
+      color: #047847;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .no-gallery-items p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #666;
+    }
+    
+    /* Gallery Item Hover Effects */
+    .gallery-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gallery-hover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 10px;
+      z-index: 1;
+    }
+    
+    .gallery-item:hover .gallery-hover-overlay {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 100px; margin-right: 25px;">
+        
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul style="justify-content: center; display: flex; width: 100%;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/gallery" class="active">Gallery</a></li>
+          <li><a href="/#clients">Testimonials</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" data-aos="fade-up">
+            <h1>Our Gallery</h1>
+            <p>Explore our collection of travel memories, destinations, and services</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="gallery-filter">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="travel">Travel</button>
+              <button class="filter-btn" data-filter="destinations">Destinations</button>
+              <button class="filter-btn" data-filter="services">Services</button>
+              <button class="filter-btn" data-filter="events">Events</button>
+              <button class="filter-btn" data-filter="testimonials">Testimonials</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Gallery items will be loaded here -->
+          <div class="no-gallery-items" id="noGalleryItems" style="display: none;">
+            <i class="bi bi-images"></i>
+            <h3>No Gallery Items Yet</h3>
+            <p>Gallery items will appear here once they are added by the admin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Image Modal -->
+    <div class="modal fade" id="galleryImageModal" tabindex="-1" aria-labelledby="galleryImageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+          <div class="modal-header" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border-radius: 15px 15px 0 0; padding: 20px 25px; border: none;">
+            <h5 class="modal-title" id="galleryImageModalLabel" style="font-weight: 600;">
+              <i class="fas fa-image me-2"></i>Gallery Image
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="gallery-modal-image-container" style="position: relative; max-height: 60vh; overflow: hidden;">
+              <img id="modalGalleryImage" src="" alt="" class="img-fluid w-100" style="object-fit: cover; border-radius: 0;">
+              <div class="gallery-modal-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; color: white;">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span id="modalGalleryCategory" class="badge bg-warning text-dark px-3 py-2" style="font-size: 0.9rem;">Category</span>
+                  <span id="modalGalleryDate" class="text-white-50" style="font-size: 0.9rem;">
+                    <i class="fas fa-calendar-alt me-1"></i>Added: <span id="modalGalleryDateText"></span>
+                  </span>
+                </div>
+                <h4 id="modalGalleryTitle" class="text-white mb-2" style="font-weight: 600;">Gallery Title</h4>
+                <p id="modalGalleryDescription" class="text-white-75 mb-0" style="line-height: 1.5;">Gallery description will appear here...</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background: #f8f9fa; border-radius: 0 0 15px 15px; padding: 15px 25px; border: none;">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              <i class="fas fa-times me-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column: Company Info & Social Media -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <div class="footer-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Wanaag Travel Logo" style="height: 50px; margin-bottom: 15px;">
+                <h3>Wanaag Travel Agency</h3>
+              </div>
+              <p>Your trusted partner for flights, hotels, tours, visas, and logistics.</p>
+              <div class="footer-social">
+                <div class="social-links">
+                  <a href="https://www.facebook.com/profile.php?id=100020513725614" class="facebook" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/252614683707" class="whatsapp" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                  <a href="http://www.linkedin.com/in/wanaag-travel-and-logistics-48b548258" class="linkedin" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle Column: Quick Links -->
+          <div class="col-lg-2 col-md-6">
+            <div class="footer-links">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Right Column: Newsletter & Contact -->
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-newsletter">
+              <h4>Stay Updated</h4>
+              <div class="newsletter-form">
+                <input type="email" placeholder="Enter email" required>
+                <button type="submit">Subscribe</button>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+252 614683707</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>travelwanaag@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Mogadishu, Somalia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              &copy; 2025 <strong><span>Wanaag Travel Agency</span></strong>. All rights reserved.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="footer-legal-links">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    // Check if user is already logged in
+    (function(){
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // Hide admin access button if already logged in
+          document.getElementById('adminAccess').style.display = 'none';
+        }
+      } catch (e) { /* ignore */ }
+    })();
+    
+    // Gallery functionality
+    let galleryItems = [];
+    let currentFilter = 'all';
+
+    // Load gallery items from backend API
+    async function loadGalleryItems() {
+      try {
+        const response = await fetch('/api/gallery');
+        const data = await response.json();
+        
+        if (data.success) {
+          // Transform backend data to match frontend format
+          galleryItems = data.images.map(item => ({
+            id: item.id,
+            title: item.alt_text || 'Gallery Image',
+            description: item.description || '',
+            category: 'travel', // Default category, can be enhanced later
+            imageUrl: item.file_path,
+            featured: false, // Can be enhanced later
+            createdAt: item.created_at
+          }));
+        } else {
+          console.error('Failed to load gallery items:', data.error);
+          galleryItems = [];
+        }
+      } catch (error) {
+        console.error('Error loading gallery items:', error);
+        galleryItems = [];
+      }
+      
+      displayGalleryItems();
+    }
+
+    // Display gallery items
+    function displayGalleryItems() {
+      const galleryGrid = document.getElementById('galleryGrid');
+      
+      if (galleryItems.length === 0) {
+        galleryGrid.innerHTML = `
+          <div class="no-gallery-items">
+            <i class="bi bi-images"></i>
+            <h3>No Gallery Items Yet</h3>
+            <p>Gallery items will appear here once they are added by the admin.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Filter items based on current filter
+      const filteredItems = currentFilter === 'all' 
+        ? galleryItems 
+        : galleryItems.filter(item => item.category === currentFilter);
+
+      if (filteredItems.length === 0) {
+        galleryGrid.innerHTML = `
+          <div class="no-gallery-items">
+            <i class="bi bi-images"></i>
+            <h3>No Items in This Category</h3>
+            <p>No gallery items found for the selected category.</p>
+          </div>
+        `;
+        return;
+      }
+
+      galleryGrid.innerHTML = filteredItems.map(item => `
+        <div class="gallery-item" data-category="${item.category}" onclick="openGalleryModal(${item.id})" style="cursor: pointer;">
+          ${item.featured ? '<div class="featured-badge">Featured</div>' : ''}
+          <img src="${item.imageUrl}" alt="${item.title}" loading="lazy">
+          <div class="gallery-content">
+            <div class="gallery-category">${item.category}</div>
+            <h3 class="gallery-title">${item.title}</h3>
+            <p class="gallery-description">${item.description}</p>
+            <div class="gallery-date">Added: ${new Date(item.createdAt).toLocaleDateString()}</div>
+          </div>
+          <div class="gallery-hover-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; border-radius: 10px;">
+            <i class="fas fa-search-plus text-white" style="font-size: 2rem;"></i>
+          </div>
+        </div>
+      `).join('');
+      
+      // Add hover effects after rendering
+      setTimeout(addGalleryHoverEffects, 50);
+    }
+
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Update current filter
+        currentFilter = this.getAttribute('data-filter');
+        
+        // Display filtered items
+        displayGalleryItems();
+      });
+    });
+
+    // Global variable to store current gallery item
+    let currentGalleryItem = null;
+
+    // Open gallery modal with full image and details
+    function openGalleryModal(itemId) {
+      const item = galleryItems.find(item => item.id === itemId);
+      if (!item) return;
+
+      currentGalleryItem = item;
+
+      // Update modal content
+      document.getElementById('modalGalleryImage').src = item.imageUrl;
+      document.getElementById('modalGalleryImage').alt = item.title;
+      document.getElementById('modalGalleryTitle').textContent = item.title;
+      document.getElementById('modalGalleryDescription').textContent = item.description;
+      document.getElementById('modalGalleryCategory').textContent = item.category;
+      document.getElementById('modalGalleryDateText').textContent = new Date(item.createdAt).toLocaleDateString();
+
+      // Show modal
+      const modal = new bootstrap.Modal(document.getElementById('galleryImageModal'));
+      modal.show();
+    }
+
+
+    // Add hover effects for gallery items
+    function addGalleryHoverEffects() {
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      galleryItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          const overlay = this.querySelector('.gallery-hover-overlay');
+          if (overlay) overlay.style.opacity = '1';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          const overlay = this.querySelector('.gallery-hover-overlay');
+          if (overlay) overlay.style.opacity = '0';
+        });
+      });
+    }
+
+    // Load gallery items when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      loadGalleryItems();
+      
+      // Add hover effects after items are loaded
+      setTimeout(addGalleryHoverEffects, 100);
+    });
+  </script>
+
+</body>
+
+</html>
