@@ -1,43 +1,35 @@
 #!/usr/bin/env python3
 """
-Database Initialization Script
-This script will create the users table and add the default Super Admin user.
+Database Initialization Script (legacy helper).
+
+Uses the same DATABASE_URL / DB_* settings as App.py.
+Prefer: `python create_db_tables.py` then start the app (or POST /api/init-database).
+
+This script still creates core tables via raw SQL and the Super Admin user.
 """
 
-import pymysql
 from werkzeug.security import generate_password_hash
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Database configuration
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',  # Update with your MySQL username
-    'password': '',  # Update with your MySQL password
-    'database': 'wanaagtravel_db',
-    'charset': 'utf8mb4'
-}
+
+def get_db_connection():
+    """Same MySQL connection as the main app (Flask-SQLAlchemy engine)."""
+    from App import get_db_connection as app_get_db_connection
+
+    return app_get_db_connection()
+
 
 # Default Super Admin credentials
 DEFAULT_EMAIL = 'admin@wanaagtravel.com'
 DEFAULT_USERNAME = 'admin'
 DEFAULT_PASSWORD = 'Admin@123'
-
-def get_db_connection():
-    """Get MySQL database connection"""
-    try:
-        connection = pymysql.connect(
-            cursorclass=pymysql.cursors.DictCursor,
-            autocommit=False,
-            **DB_CONFIG
-        )
-        return connection
-    except Exception as e:
-        logger.error(f"Database connection failed: {e}")
-        raise Exception(f"Database connection failed: {e}")
 
 def create_users_table():
     """Create users table with proper MySQL syntax"""

@@ -1,4 +1,5 @@
-# Database Configuration
+# Database Configuration (use DATABASE_URL or the four variables below)
+# DATABASE_URL=mysql+pymysql://cpaneluser_dbuser:password@localhost/cpaneluser_dbname
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_password

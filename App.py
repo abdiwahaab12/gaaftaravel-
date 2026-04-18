@@ -7,12 +7,62 @@ from werkzeug.utils import secure_filename
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
+import pymysql
+import pymysql.err
+from urllib.parse import quote_plus
+from sqlalchemy.engine.url import make_url
+
+from extensions import db
 
 # Load environment variables
 load_dotenv()
 
+
+def get_database_url():
+    """
+    Production MySQL URI for Flask-SQLAlchemy and PyMySQL.
+    Prefer DATABASE_URL; otherwise build from DB_HOST, DB_USER, DB_PASSWORD, DB_NAME.
+    Example (cPanel):
+      DATABASE_URL=mysql+pymysql://cpaneluser_dbuser:password@localhost/cpaneluser_dbname
+    """
+    direct = (os.environ.get("DATABASE_URL") or "").strip()
+    if direct:
+        return direct
+    host = os.environ.get("DB_HOST")
+    user = os.environ.get("DB_USER")
+    password = os.environ.get("DB_PASSWORD", "")
+    name = os.environ.get("DB_NAME")
+    if host and user and name:
+        return (
+            f"mysql+pymysql://{quote_plus(user)}:{quote_plus(password)}@{host}/{name}"
+        )
+    return None
+
+
 # ---------------- FLASK CONFIG ----------------
 app = Flask(__name__, static_folder='static', template_folder='templates')
+
+# Flask-SQLAlchemy (MySQL via PyMySQL driver)
+_database_url = get_database_url()
+if not _database_url:
+    print(
+        "WARNING: DATABASE_URL is not set and DB_HOST/DB_USER/DB_NAME are incomplete. "
+        "Set DATABASE_URL or all of DB_HOST, DB_USER, DB_PASSWORD, DB_NAME for MySQL."
+    )
+app.config["SQLALCHEMY_DATABASE_URI"] = _database_url or "mysql+pymysql://:@localhost/mysql"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_pre_ping": True,
+    "pool_recycle": 280,
+    "connect_args": {
+        "charset": "utf8mb4",
+        "cursorclass": pymysql.cursors.DictCursor,
+    },
+}
+db.init_app(app)
+
+# Register SQLAlchemy models (used by db.create_all())
+import models  # noqa: E402, F401
 
 # Debug: Print static folder path
 print(f"Flask static folder: {app.static_folder}")
@@ -862,8 +912,7 @@ def handle_invalid_token(err):
 def handle_expired_token(jwt_header, jwt_payload):
     return jsonify({'error': 'Token expired', 'details': 'Please sign in again.'}), 401
 
-# ---------------- MYSQL CONFIG ----------------
-import pymysql
+# ---------------- MYSQL / SQLAlchemy ENGINE ----------------
 import logging
 import re
 
@@ -871,58 +920,26 @@ import re
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def get_db_connection():
-    """Get MySQL database connection with proper error handling"""
-    try:
-        # Get database configuration from environment variables
-        db_host = os.getenv('DB_HOST', 'localhost')
-        db_user = os.getenv('DB_USER', 'root')
-        db_password = os.getenv('DB_PASSWORD', '')
-        db_name = os.getenv('DB_NAME', 'wanaagtravel_db')
-        
-        # First try to connect to the database
-        connection = pymysql.connect(
-            host=db_host,
-            user=db_user,
-            password=db_password,
-            database=db_name,
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor,
-            autocommit=False
+    """
+    Return a raw DB-API connection from the shared SQLAlchemy engine (PyMySQL).
+    Uses the same DATABASE_URL / DB_* settings as Flask-SQLAlchemy.
+    Cursor defaults to DictCursor (see SQLALCHEMY_ENGINE_OPTIONS connect_args).
+    """
+    url = get_database_url()
+    if not url:
+        raise RuntimeError(
+            "Database is not configured. Set DATABASE_URL, or set DB_HOST, DB_USER, "
+            "DB_PASSWORD, and DB_NAME in your environment (.env on cPanel)."
         )
-        return connection
-    except Exception as e:
-        # If database doesn't exist, try to create it
-        try:
-            logger.info("Database not found, attempting to create it...")
-            # Connect without specifying database
-            temp_connection = pymysql.connect(
-                host='localhost',
-                user='root',
-                password='',
-                charset='utf8mb4',
-                cursorclass=pymysql.cursors.DictCursor,
-                autocommit=True
-            )
-            cursor = temp_connection.cursor()
-            cursor.execute("CREATE DATABASE IF NOT EXISTS wanaagtravel_db")
-            cursor.close()
-            temp_connection.close()
-            
-            # Now try to connect to the created database
-            connection = pymysql.connect(
-                host='localhost',
-                user='root',
-                password='',
-                database='wanaagtravel_db',
-                charset='utf8mb4',
-                cursorclass=pymysql.cursors.DictCursor,
-                autocommit=False
-            )
-            return connection
-        except Exception as create_error:
-            logger.error(f"Database creation failed: {create_error}")
-            raise Exception(f"Database connection failed: {e}")
+    try:
+        parsed = make_url(url)
+        if not parsed.database:
+            raise RuntimeError("DATABASE_URL must include a database name, e.g. ...@localhost/your_db")
+    except Exception as exc:
+        raise RuntimeError(f"Invalid DATABASE_URL: {exc}") from exc
+    return db.engine.raw_connection()
 
 # Ensure default user exists before app runs
 DEFAULT_EMAIL = 'admin@wanaagtravel.com'
@@ -5530,7 +5547,7 @@ def update_user(user_id):
             return jsonify({'error': 'User not found'}), 404
         
         return jsonify({'success': True, 'user': user}), 200
-    except sqlite3.IntegrityError:
+    except pymysql.err.IntegrityError:
         return jsonify({'error': 'Email already exists'}), 400
     except Exception as e:
         return jsonify({'error': 'Database error', 'details': str(e)}), 500
@@ -9570,8 +9587,15 @@ def export_receipts_csv():
 
 
 # ---------------- RUN APP ----------------
+def run_sqlalchemy_create_all():
+    """Run db.create_all() for SQLAlchemy models (safe to call on existing DB)."""
+    with app.app_context():
+        db.create_all()
+
+
 if __name__ == '__main__':
     try:
+        run_sqlalchemy_create_all()
         # First, ensure the basic user system is set up
         ensure_default_user()  # Make sure default user exists
         ensure_user_module_permissions_table()  # Make sure user module permissions table exists
