@@ -1,9 +1,9 @@
 # Database Configuration (use DATABASE_URL or the four variables below)
-# DATABASE_URL=mysql+pymysql://cpaneluser_dbuser:password@localhost/cpaneluser_dbname
+# DATABASE_URL=mysql+pymysql://gaaftnwn_gaaf_user:YOUR_PASSWORD@localhost/gaaftnwn_gaaf
 DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=wanaag_travel
+DB_USER=gaaftnwn_gaaf_user
+DB_PASSWORD=YOUR_PASSWORD
+DB_NAME=gaaftnwn_gaaf
 
 # JWT Configuration
 JWT_SECRET_KEY=your_super_secret_jwt_key_here
