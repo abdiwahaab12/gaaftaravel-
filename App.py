@@ -1985,8 +1985,8 @@ def signin():
 
         # Connect to MySQL database
         db = get_db_connection()
-        cursor = db.cursor()
-        
+        cursor = db.cursor(pymysql.cursors.DictCursor)
+
         # Query user by email using prepared statement
         cursor.execute("""
             SELECT id, username, email, password_hash, first_name, last_name, role, is_active, dashboard_access
@@ -2003,7 +2003,7 @@ def signin():
                 db.close()
                 ensure_default_user()
                 db = get_db_connection()
-                cursor = db.cursor()
+                cursor = db.cursor(pymysql.cursors.DictCursor)
                 cursor.execute("""
                     SELECT id, username, email, password_hash, first_name, last_name, role, is_active, dashboard_access
                     FROM users 
